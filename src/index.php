@@ -72,6 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['messages'][] = ['role' => 'assistant', 'content' => $answer];
         }
         curl_close($ch);
+        //answerからデータを取り、dbに保存する処理を追加
+        if (preg_match('/手に入れた！/', $answer)) {
+            $item_name = trim(explode('は', $answer)[1]);
+        }
     }
 }
 ?>

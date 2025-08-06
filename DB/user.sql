@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: db
--- 生成日時: 2025 年 8 月 06 日 06:42
+-- 生成日時: 2025 年 8 月 06 日 08:19
 -- サーバのバージョン： 8.4.6
 -- PHP のバージョン: 8.2.29
 
@@ -41,11 +41,12 @@ CREATE TABLE `item` (
 
 CREATE TABLE `user` (
   `user_id` int NOT NULL,
-  `user_name` int NOT NULL,
+  `user_name` varchar(256) NOT NULL,
   `hp` int NOT NULL,
   `atk` int NOT NULL,
   `def` int NOT NULL,
-  `item` varchar(256) DEFAULT NULL
+  `item` varchar(256) DEFAULT NULL,
+  `other` varchar(1024) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ユーザーデータ';
 
 --
