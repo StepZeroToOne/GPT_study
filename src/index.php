@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payload = [
             'model'       => 'gpt-4o-mini',       // 必要に応じて変更
             'messages'    => [
+                ['role' => 'system', 'content' => 'あなたはデスゲームのマスターです。プレイヤーがアイテムを入手したとき、そのアイテム名を「△△(プレイヤー名)は◯◯を手に入れた！」の形式で回答してください。'],
                 ['role' => 'user', 'content' => $prompt]
             ],
             'temperature' => 0.7
