@@ -9,7 +9,12 @@
  * 必要環境変数:
  *   OPENAI_API_KEY  ... OpenAI のシークレットキー
  */
-
+session_start();
+if (!isset($_SESSION['messages'])) {
+    $_SESSION['messages'] = [
+        ['role' => 'system', 'content' => 'あなたはデスゲームのマスターです。プレイヤーがアイテムを入手したとき、そのアイテム名を「△△(プレイヤー名)は◯◯を手に入れた！」の形式で回答してください。']
+    ];
+}
 $answer = '';
 $error  = '';
 
@@ -22,14 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = '環境変数 OPENAI_API_KEY が設定されていません。';
     } else {
         $apiKey = getenv('OPENAI_API_KEY');
-
+        $_SESSION['messages'][] = ['role' => 'user', 'content' => $prompt];
         // Chat Completions API のリクエストペイロード
         $payload = [
             'model'       => 'gpt-4o-mini',       // 必要に応じて変更
-            'messages'    => [
-                ['role' => 'system', 'content' => 'あなたはデスゲームのマスターです。プレイヤーがアイテムを入手したとき、そのアイテム名を「△△(プレイヤー名)は◯◯を手に入れた！」の形式で回答してください。'],
-                ['role' => 'user', 'content' => $prompt]
-            ],
+            'messages'    => $_SESSION['messages'],
             'temperature' => 0.7
         ];
 
@@ -57,6 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data   = json_decode($response, true);
                 $answer = $data['choices'][0]['message']['content'] ?? '(回答なし)';
             }
+        }
+        if (isset($answer)) {
+            $_SESSION['messages'][] = ['role' => 'assistant', 'content' => $answer];
         }
         curl_close($ch);
     }
