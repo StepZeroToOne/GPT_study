@@ -37,7 +37,7 @@ services:
 
   pma:
     image: phpmyadmin:5
-    container_name: phpmyadmin
+    container_name: phpmyadmin_gpt_study
     ports:
       - "8088:80"
     environment:

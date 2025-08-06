@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $prompt = trim($_POST['prompt'] ?? '');
 
     if ($prompt === '') {
-        $error = 'テキストを入力してください。';
+        $answer = 'テキストを入力してください。';
     } elseif (! getenv('OPENAI_API_KEY')) {
         $error = '環境変数 OPENAI_API_KEY が設定されていません。';
     } else {
@@ -68,29 +68,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>ChatGPT API テスト</title>
     <style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        margin: 2rem;
-    }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 2rem;
+        }
 
-    textarea {
-        width: 100%;
-        height: 130px;
-        margin-top: .5rem;
-    }
+        textarea {
+            width: 100%;
+            height: 130px;
+            margin-top: .5rem;
+        }
 
-    button {
-        margin-top: 1rem;
-        padding: .5rem 1rem;
-        font-size: 1rem;
-    }
+        button {
+            margin-top: 1rem;
+            padding: .5rem 1rem;
+            font-size: 1rem;
+        }
 
-    pre {
-        background: #f7f7f7;
-        padding: 1rem;
-        border-radius: 6px;
-        white-space: pre-wrap;
-    }
+        pre {
+            background: #f7f7f7;
+            padding: 1rem;
+            border-radius: 6px;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 
@@ -99,17 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="post">
         <label for="prompt">質問を入力してください:</label>
-        <textarea id="prompt" name="prompt"
-            required><?= htmlspecialchars($_POST['prompt'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></textarea>
+        <textarea id="prompt" name="prompt"><?= htmlspecialchars($_POST['prompt'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></textarea>
         <br>
         <button type="submit">送信</button>
     </form>
 
     <?php if ($error): ?>
-    <p style="color:red"><?= htmlspecialchars($error, ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></p>
+        <p style="color:red"><?= htmlspecialchars($error, ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></p>
     <?php elseif ($answer): ?>
-    <h2>回答</h2>
-    <pre><?= htmlspecialchars($answer, ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></pre>
+        <h2>回答</h2>
+        <pre><?= htmlspecialchars($answer, ENT_QUOTES | ENT_HTML5, 'UTF-8') ?></pre>
     <?php endif; ?>
 
 </body>
